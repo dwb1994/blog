@@ -3,19 +3,19 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: dwb-blog
 subtitle:
-description:
-keywords:
-author: John Doe
-language:
+description: 智者务其实 愚者争虚名
+keywords: 董文博 去哪儿网 前端 设计
+author: dwb
+language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://dwbbb.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: blog/:title/
 permalink_defaults:
 
 # Directory
@@ -29,7 +29,7 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: :year-:month-:day-:title.md  # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
@@ -73,9 +73,29 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: gallery
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: https://github.com/dwb1994/dwb1994.github.io.git
+  branch: master
+
+algolia:
+  applicationID: 'CF07UHN8AP'
+  indexName: 'dwbblog'
+  chunkSize: 5000
+
+
+# title
+links_title: Links
+links:
+  佳佳: https://blog.songzhj.com/
+  美霖: https://youthlin.com/
+  qingguoing: https://qingguoing.com/
+  田琦: https://tianqi.name/
+  许欣: https://venoral.github.io/
+  茂茂: https://swumao.github.io/
+#  杨宽: http://youngkaaa.cn/
+  王子然: http://ziran.qlf3.com/

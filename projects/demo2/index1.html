@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>demo</title>
+    <style>
+        .outer {
+            width: 120px;
+            box-sizing: border-box;
+            border-left: 1px solid #cdf;
+            border-right: 1px solid #cdf;
+        }
+
+        .inner {
+            width: 121px;
+            box-sizing: border-box;
+            height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="outer">
+            <div class="inner">class</div>
+        </div> -->
+    <!-- <span class="t test1">test</span><span class="t test2">test</span> -->
+    <p>script 标签在 body 后面111</p>
+    <img src="https://ws1.sinaimg.cn/large/006cGJIjly1fizajwmz91j308k04t0sw.jpg" alt="normal">
+    <div id="forAppend" class="demo" style="width:200px;"></div>
+
+</body>
+
+<script>
+    var eleAppend = document.getElementById("forAppend");
+    window.URL = window.URL || window.webkitURL;
+    if (typeof history.pushState == "function") {
+        var xhr = new XMLHttpRequest();
+        xhr.open("get", "./camel3.jpg", true);
+        xhr.responseType = "blob";
+        xhr.onload = function () {
+            if (this.status == 200) {
+                var blob = this.response;
+                var img = document.createElement("img");
+                img.onload = function (e) {
+                    window.URL.revokeObjectURL(img.src); // 清除释放
+                };
+                img.src = window.URL.createObjectURL(blob);
+                eleAppend.appendChild(img);
+            }
+        }
+        xhr.send();
+    } else {
+        eleAppend.innerHTML = '<p style="color:#cd0000;">请求失败</p>';
+    }
+</script>
+
+</html>

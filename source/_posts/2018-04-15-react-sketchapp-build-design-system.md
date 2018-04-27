@@ -2,7 +2,7 @@
 title: 使用 React 管理你的设计资产
 date: 2018-04-15
 tags: [design, 规范, 团队协作]
-photos: [https://ws1.sinaimg.cn/large/006oPFLAly1fqgonxjodlj31hc0zfad9.jpg]
+photos: [https://ws1.sinaimg.cn/large/006oPFLAly1fqqby6sujqj31hc0sg7ei.jpg]
 ---
 # 使用 React 管理你的设计资产
 

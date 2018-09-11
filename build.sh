@@ -5,3 +5,7 @@ hexo clean
 hexo g
 cp -r projects public
 hexo d
+
+git add -A
+git commit -m "docs: blog update"
+git push

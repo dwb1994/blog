@@ -6,31 +6,10 @@ photos: [http://ww1.sinaimg.cn/large/006oPFLAly1fvkzqj4gqnj31hc0zkn3e.jpg]
 ---
 
 ```
-技巧：
-0. 根据使用场景的设备质量与稳定性确定是否需要更强烈的对比度
-1. 正确使用对比度
-2. 使用不同半透明度的文本，用于区分辅助文本、helper文本和icon。同时这样做可以让信息层次鲜明，有助于用户理解信息
-2. 告别花花绿绿的颜色
-多色背景，文字要加黑色背景
-3. md里面找一找
-实践出真知，屏幕质量、光源质量、其他光源影响、设备老化、色盲、色弱、甚至散光
-
-对比度什么问题
-
 material 的解决方案
 与黑色的对比度，用的是 black .87 这是由于md中黑色文本最深色为.87
 
-用js实现
-
 最小对比度的规律
-
-！支持半透明度
-！支持基准参数调整
-
-## 工具介绍
-[tinycolor](https://github.com/bgrins/TinyColor)
-[色彩对比度计算器](https://contrast-ratio.com/)
-谷歌浏览器，控制台
 
 ## 算法探究与优化
 ```
@@ -127,9 +106,165 @@ tinycolor.isReadable("#ff0088", "#5c1a72",{level:"AA",size:"large"}), //true
 
 ![](http://ww1.sinaimg.cn/large/006oPFLAly1fvm5vcxwwfj30f002aq3a.jpg)
 
-可以看到状态栏的文本是黑色，而 header 中的文本颜色又是白色，一般来说状态栏的颜色设置为黑色或白色（iOS 中只能设置这两种颜色），这时状态栏的颜色最好根据 js 来计算，而不是人为设置黑色或白色。
+可以看到状态栏的文本是黑色，而 header 中的文本颜色又是白色，一般来说状态栏的颜色设置为黑色或白色（iOS 中只能设置这两种颜色），这时状态栏的颜色最好根据 js 来计算，人为设置黑色或白色容易搭配不当或者遗漏配置。
 
 ## 一些技巧
+
+### 1. 文本使用带有半透明度的黑色或白色
+
+在彩色背景上使用灰色文本会降低对比度:
+
+<img src="http://ww1.sinaimg.cn/large/006oPFLAly1fvma9idexgj30iw07st9g.jpg" width="680"/>
+
+最早是在 Material Design 的设计规范中看到的这个技巧，使用透明的黑白色文本和彩色背景的时候，文本颜色会混合成相应的深色，例如上图中的深粉色。这样做的好处是背景颜色变化的时候文本颜色会自动混合成对应的深色，不必改变文本的颜色值。
+
+### 2. 告别五彩斑斓的文本
+
+页面中色彩不宜过多，谨慎使用彩色文本，应该把彩色留给按钮、链接、开关等组件，这样做的好处是文本层次鲜明，**失去控制**的过多色彩会让内容缺乏重点。
+
+正文使用黑白色（在大段的正文中使用彩色文本不利于阅读）
+
+### 3. 使用不同半透明度的文本
+
+按照功能的重要性，为文本制定不同半透明度的规范，从而对不同层次信息的对比度加以区分。
+
+使用不同半透明度的文本，用于区分标题、正文、描述文本、提示文本和icon。这样做可以让读者阅读起来有一定的优先级关系，可以让信息层次鲜明，有助于用户理解关键信息，减少阅读时候的疲劳感。
+
+<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvmaudlnt7j315o0ekjun.jpg" width="750"/>
+
+### 4. 多种色彩的背景上使用文本
+
+如果背景的色彩比较复杂（如渐变色、图案等），则可以根据平均值来作为背景色计算对比度。
+
+如果背景色的色彩差异较大，则应在文本和背景之间添加遮罩。
+
+### 5. 使用 JS 进行对比度的计算
+
+即上文提到的使用 [TinyColor](https://github.com/bgrins/TinyColor#readability) 工具进行精确计算，在构建工具中验证。
+
+### 6. 根据实际场景调整对比度
+
+虽然 WCAG 提出了 AA/AAA 级对比度标准，但是实际使用时应从用户角度出发，根据实际场景确定是否需要更强烈的对比度，举几个例子：
+
+- 设备质量：屏幕质量是否比较差、投影仪是否老化，显示效果不好的时候应提高对比度
+- 分散注意：用户在跑步、乘车、嘈杂环境这样的不稳定场景中使用，分散在界面上的注意力会大打折扣，这时应提高对比度
+- 用户视觉能力：近视、散光甚至色盲、色弱的比例
+- 其他影响：是否有其他光源影响显示
+
+## 算法探究与优化
+
+### Material Design 根据对比度判断使用黑色/白色的源码
+
+[源码链接](https://github.com/material-components/material-components-web/blob/master/packages/mdc-theme/_functions.scss)
+
+这段代码用 sass 实现了若干函数，其中：
+
+** 1. @function mdc-theme-contrast-tone ** 传入一个颜色值，返回该颜色背景上应该使用的颜色为 **light / dark** 颜色
+
+** 2. @function mdc-theme-tone ** 传入一个颜色值，返回该颜色为 **light / dark** 颜色，核心代码：
+
+``` scss
+  // 传入的颜色值为 $color
+  $lightContrast: mdc-theme-contrast($color, white); // 计算传入颜色和白色的对比度
+  $darkContrast: mdc-theme-contrast($color, rgba(black, .87)); // 计算传入颜色和黑色的对比度
+  $minimumContrast: 3.1; // 设置最小对比度
+  @if ($lightContrast < $minimumContrast) and ($darkContrast > $lightContrast) {
+    // 传入的颜色值和白色的对比度小于最小对比度 并且 和黑色的对比度更高
+    @return "light"; // 我们认为传入的颜色是浅色
+  } @else {
+    // 我们认为传入的颜色是深色
+    @return "dark";
+  }
+```
+
+3.👆 上面的代码中用到了计算对比度的函数 **mdc-theme-contrast** 也在这段代码中，对比度是这样计算的：
+``` scss
+// 计算颜色的相对亮度（relative luminance）
+@function mdc-theme-luminance($color) {
+  $red: nth($mdc-theme-linear-channel-values, red($color) + 1);
+  $green: nth($mdc-theme-linear-channel-values, green($color) + 1);
+  $blue: nth($mdc-theme-linear-channel-values, blue($color) + 1);
+  @return .2126 * $red + .7152 * $green + .0722 * $blue;
+}
+// 计算两个颜色的对比度（contrast ratio）
+@function mdc-theme-contrast($back, $front) {
+  $backLum: mdc-theme-luminance($back) + .05;
+  $foreLum: mdc-theme-luminance($front) + .05;
+  @return max($backLum, $foreLum) / min($backLum, $foreLum);
+}
+```
+
+这里用到了一个对比度计算公式： [https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests](https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests)
+
+可以看到一些有趣的参数：
+
+``` scss
+@return .2126 * $red + .7152 * $green + .0722 * $blue;
+```
+
+**相同的色值，绿色要显得亮一些，相反蓝色要显得暗一些。**
+
+### 优化：支持半透明度颜色混合
+
+Material Design 在计算传入颜色和黑色的对比度时，传入的是一个带有半透明度的色值，实际上在执行时会按照纯黑色(不带有半透明度)进行解析。
+
+``` scss
+$darkContrast: mdc-theme-contrast($color, rgba(black, .87)); // 计算传入颜色和黑色的对比度
+```
+
+我理解的 **rgba(black, .87)** 指的是 Material Design 规定的正文字体颜色（深色），因此这里按照半透明色进行解析会更好一些，这样我们判断颜色是深色还是浅色时的依据就是页面上最深的文本颜色 (#000 87%) 和最浅的背景颜色 (#fff 100%) 了。
+
+用 js 来实现这个混合的过程 (依赖 tinycolor)：
+
+``` js
+// Alpha 合成 支持前景色半透明
+function mixColor(front, back) {
+  var rgbFront = tinycolor(front).toRgb();
+  var rgbBack = tinycolor(back).toRgb();
+  var alphaFront = rgbFront.a;
+  var mixR = alphaFront * rgbFront.r + (1 - alphaFront) * rgbBack.r;
+  var mixG = alphaFront * rgbFront.g + (1 - alphaFront) * rgbBack.g;
+  var mixB = alphaFront * rgbFront.b + (1 - alphaFront) * rgbBack.b;
+  var res = tinycolor({ r: mixR, g: mixG, b: mixB }).toHexString();
+  return res;
+}
+```
+Alpha 合成算法来自： [维基百科 - Alpha 合成](https://zh.wikipedia.org/wiki/Alpha%E5%90%88%E6%88%90)
+
+### 优化：支持调节最小对比度
+
+Material Design 中最小对比度是写死的 **3.1**，不知道为什么没有设置为 AA/AAA 级对比度标准，这里可以传入参数来指定最小对比度：
+
+``` js
+function contrast(color, contrast) {
+  if (color === 'light' || color === 'dark') return color;
+  var minimumContrast = contrast || 3.5;
+
+  var lightContrast = getContrast(color, '#fff');
+  var darkContrast = getContrast(color, '#000');
+
+  if (lightContrast < minimumContrast && darkContrast > lightContrast) {
+    return 'light';
+  } else {
+    return 'dark';
+  }
+}
+```
+
+
+### 用 js 实现
+
+
+上文提到的 Material Design 的源码包含的几个函数，在 [TinyColor](https://github.com/bgrins/TinyColor) 这个工具里都有实现。
+
+我按照 Material Design 的实现思路，用 js 实现了一遍，只增加了上文提到的两个优化点: [源码地址](https://github.com/dwb1994/lightordark)
+
+## 参考资料
+
+- [Android accessibility 帮助 - 色彩对比度](https://support.google.com/accessibility/android/answer/7158390?hl=zh-Hans)
+- [Human Interface Guidelines - iOS - Accessibility](https://developer.apple.com/design/human-interface-guidelines/ios/app-architecture/accessibility/)
+- [Material Design - Text legibility](https://material.io/design/color/text-legibility.html#)
+
 
 <style>
 .imgContainer {

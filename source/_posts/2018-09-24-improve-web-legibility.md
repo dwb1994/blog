@@ -15,10 +15,10 @@ photos: [http://ww1.sinaimg.cn/large/006oPFLAly1fvkzqj4gqnj31hc0zkn3e.jpg]
 在缺乏专业设计的页面中，我们经常见到下面这样的画面：
 
 这是公司的某内部系统：
-![](http://ww1.sinaimg.cn/large/006oPFLAly1fvknphxqyhj310q03176f.jpg)
+<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvknphxqyhj310q03176f.jpg" style="width:100%; max-width: 661px;" />
 
 公司某内部工具：
-![](http://ww1.sinaimg.cn/large/006oPFLAly1fvl0oz431pj30gc02at8t.jpg)
+<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvl0oz431pj30gc02at8t.jpg" style="width:100%; max-width: 294px;" />
 
 有没有觉得上面的文本特别刺眼，难以识别？
 
@@ -94,7 +94,7 @@ tinycolor.isReadable("#ff0088", "#5c1a72",{level:"AA",size:"large"}), //true
 
 通过 JS 进行对比度的计算，举个栗子，一个最常见的场景: 手机顶部状态栏中文本非常显眼，背景色多变，但文本色的正确搭配往往被忽视，下图是我们 APP 中某个页面的状态栏：
 
-![](http://ww1.sinaimg.cn/large/006oPFLAly1fvm5vcxwwfj30f002aq3a.jpg)
+<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvm5vcxwwfj30f002aq3a.jpg" style="width:100%; max-width: 540px;" />
 
 可以看到状态栏的文本是黑色，而 header 中的文本颜色又是白色，一般来说状态栏的颜色设置为黑色或白色（iOS 中只能设置这两种颜色），这时状态栏的颜色最好根据 js 来计算，人为设置黑色或白色容易搭配不当或者遗漏配置。
 
@@ -104,7 +104,7 @@ tinycolor.isReadable("#ff0088", "#5c1a72",{level:"AA",size:"large"}), //true
 
 在彩色背景上使用灰色文本会降低对比度:
 
-<img src="http://ww1.sinaimg.cn/large/006oPFLAly1fvma9idexgj30iw07st9g.jpg" width="680"/>
+<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvma9idexgj30iw07st9g.jpg" style="width:100%; max-width: 680px;" />
 
 最早是在 Material Design 的设计规范中看到的这个技巧，使用透明的黑白色文本和彩色背景的时候，文本颜色会混合成相应的深色，例如上图中的深粉色。这样做的好处是背景颜色变化的时候文本颜色会自动混合成对应的深色，不必改变文本的颜色值。
 
@@ -120,7 +120,7 @@ tinycolor.isReadable("#ff0088", "#5c1a72",{level:"AA",size:"large"}), //true
 
 使用不同半透明度的文本，用于区分标题、正文、描述文本、提示文本和icon。这样做可以让读者阅读起来有一定的优先级关系，可以让信息层次鲜明，有助于用户理解关键信息，减少阅读时候的疲劳感。
 
-<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvmaudlnt7j315o0ekjun.jpg" width="750"/>
+<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvmaudlnt7j315o0ekjun.jpg" style="width:100%; max-width: 700px;" />
 
 ### 4. 多种色彩的背景上使用文本
 
@@ -260,4 +260,11 @@ function contrast(color, contrast) {
 .imgContainer {
   display: flex;
 }
+
+@media (max-width: 767px) {
+  .imgContainer {
+    display: block;
+  }
+}
+
 </style>

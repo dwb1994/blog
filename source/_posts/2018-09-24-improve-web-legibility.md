@@ -2,7 +2,7 @@
 title: 提高网页设计里文本的易读性
 date: 2018-09-24
 tags: [design]
-photos: [http://ww1.sinaimg.cn/large/006oPFLAly1fvkzqj4gqnj31hc0zkn3e.jpg]
+photos: [https://ww1.sinaimg.cn/large/006oPFLAly1fvkzqj4gqnj31hc0zkn3e.jpg]
 ---
 # 提高网页设计里文本的易读性
 
@@ -57,20 +57,18 @@ photos: [http://ww1.sinaimg.cn/large/006oPFLAly1fvkzqj4gqnj31hc0zkn3e.jpg]
 
 两侧分别为文本颜色与背景色，中间一个醒目的圆盘，显示二者的对比度，鼠标移动到这个圆盘上可以查看该对比度符合 AA/AAA 对比度标准。
 
-![](http://ww1.sinaimg.cn/large/006oPFLAly1fvm422c251j318c0md442.jpg)
+![](https://ww1.sinaimg.cn/large/006oPFLAly1fvm422c251j318c0md442.jpg)
 
 ### 2. Chrome 浏览器控制台
 
 对于开发的同学来说，这种方式也很快捷方便。新版的 Chrome 浏览器增强了 CSS 的调色功能：
 
 打开控制台，选中一个 **文本元素** 然后在 Styles 中找到 color 属性，点击 **颜色值**，可以看到一个调色板。
-![](http://ww1.sinaimg.cn/large/006oPFLAly1fvm4bflw8zj30hd09wq4z.jpg)
+![](https://ww1.sinaimg.cn/large/006oPFLAly1fvm4bflw8zj30hd09wq4z.jpg)
 
 然后点击调色板的 Contrast radio 选项，展开对比度计算工具，可以看到上方的调色板出现一条白线，这条白线就是符合 AA 级对比度标准的临界值。调色板中的圆圈就是当前选中的色值，拖动这个色值即可调整文本颜色，这时下方的对比度计算工具进行了实时计算：
 
-<div class="imgContainer">
-  <img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvm4mbk5tpj306f0b1wfe.jpg" /><img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvm4vfw2h7g306f0b1x3p.jpg" />
-</div>
+<div class="imgContainer"><img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvm4mbk5tpj306f0b1wfe.jpg" /><img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvm4vfw2h7g306f0b1x3p.jpg" /></div>
 
 ### 3. 使用 JS 进行精准计算
 
@@ -247,7 +245,7 @@ function contrast(color, contrast) {
 
 上文提到的 Material Design 的源码包含的几个函数，在 [TinyColor](https://github.com/bgrins/TinyColor) 这个工具里都有实现。
 
-我按照 Material Design 的实现思路，用 js 实现了一遍，只增加了上文提到的两个优化点: [源码地址](https://github.com/dwb1994/lightordark)
+我按照 Material Design 的实现思路，用 js 实现了一遍，增加了上文提到的两个优化点 (支持半透明度颜色混合 / 支持调节最小对比度): [源码地址](https://github.com/dwb1994/lightordark)
 
 ## 参考资料
 

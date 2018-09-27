@@ -15,7 +15,7 @@ photos: [https://ww1.sinaimg.cn/large/006oPFLAly1fvkzqj4gqnj31hc0zkn3e.jpg]
 在缺乏专业设计的页面中，我们经常见到下面这样的画面：
 
 这是公司的某内部系统：
-<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvknphxqyhj310q03176f.jpg" style="width:100%; max-width: 661px;" />
+<img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvo3kq4rgzj310q031ac9.jpg" style="width:100%; max-width: 661px;" />
 
 公司某内部工具：
 <img src="https://ww1.sinaimg.cn/large/006oPFLAly1fvl0oz431pj30gc02at8t.jpg" style="width:100%; max-width: 294px;" />
